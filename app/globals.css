@@ -4,39 +4,121 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ─── Toddle Design System Tokens ─────────────────────────────────────────── */
+
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.148 0.004 228.8);
+    /* Core semantic colors */
+    --background: oklch(1 0 0);                     /* #ffffff - surface/primary/enabled */
+    --foreground: oklch(0.148 0.004 228.8);          /* #1f1f1f - text/primary */
     --card: oklch(1 0 0);
     --card-foreground: oklch(0.148 0.004 228.8);
     --popover: oklch(1 0 0);
     --popover-foreground: oklch(0.148 0.004 228.8);
-    --primary: oklch(0.505 0.213 27.518);
-    --primary-foreground: oklch(0.971 0.013 17.38);
-    --secondary: oklch(0.967 0.001 286.375);
-    --secondary-foreground: oklch(0.21 0.006 285.885);
+
+    /* Primary interactive - Toddle red/coral #ff6169 / #f04c54 */
+    --primary: oklch(0.613 0.218 18.5);             /* #ff6169 */
+    --primary-foreground: oklch(1 0 0);             /* white */
+
+    /* Secondary surface - #fafafa */
+    --secondary: oklch(0.982 0 0);
+    --secondary-foreground: oklch(0.148 0.004 228.8);
+
+    /* Muted - #f5f5f5 */
     --muted: oklch(0.963 0.002 197.1);
-    --muted-foreground: oklch(0.56 0.021 213.5);
+    --muted-foreground: oklch(0.492 0 0);           /* #707070 - text/secondary */
+
+    /* Accent */
     --accent: oklch(0.963 0.002 197.1);
-    --accent-foreground: oklch(0.218 0.008 223.9);
+    --accent-foreground: oklch(0.148 0.004 228.8);
+
+    /* Destructive */
     --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.925 0.005 214.3);
-    --input: oklch(0.925 0.005 214.3);
-    --ring: oklch(0.723 0.014 214.4);
+
+    /* Border - #e6e6e6 */
+    --border: oklch(0.906 0 0);
+    --input: oklch(0.906 0 0);
+    --ring: oklch(0.613 0.218 18.5);
+
+    /* Border radius - Toddle uses 4px and 6px mostly */
+    --radius: 0.375rem;                             /* 6px base */
+
+    /* ── Toddle-specific semantic tokens ── */
+
+    /* Surfaces */
+    --surface-primary: #ffff;
+    --surface-secondary: oklch(0.982 0 0);         /* #fafafa */
+    --surface-tertiary: oklch(0.353 0 0);          /* #525252 - dark header elements */
+    --surface-overlay: oklch(0 0 0 / 2%);
+
+    /* Header / Global nav */
+    --header-bg: oklch(0.148 0.004 228.8);         /* #1f1f1f */
+    --header-border: oklch(0.353 0 0);             /* #525252 */
+
+    /* Text */
+    --text-primary: oklch(0.148 0.004 228.8);      /* #1f1f1f */
+    --text-secondary: oklch(0.492 0 0);            /* #707070 */
+    --text-reverse: oklch(1 0 0);                  /* white - on dark bg */
+    --text-on-header: oklch(0.98 0 0);             /* #fafafa - header text */
+
+    /* Interactive */
+    --interactive-primary: oklch(0.613 0.218 18.5); /* #ff6169 */
+    --interactive-info: oklch(0.82 0.118 214);      /* #00c9e0 */
+
+    /* Border variants */
+    --border-secondary: #e6e6e6;
+    --border-bold-secondary: oklch(0.492 0 0);      /* #707070 */
+    --border-overlay: oklch(0.906 0 0 / 80%);
+
+    /* Decorative */
+    --decorative-yellow: oklch(0.93 0.124 96);      /* #ffeebf */
+    --decorative-yellow-dark: oklch(0.89 0.148 96); /* #ffdb7f */
+
+    /* Decorative avatars / status */
+    --decorative-bg-blue: oklch(0.965 0.04 214);    /* #e5fbfd */
+    --decorative-fg-blue: oklch(0.66 0.12 214);     /* #009cad */
+    --decorative-bg-yellow: oklch(0.975 0.06 96);   /* #fff8e5 */
+
+    /* Semantic success */
+    --interactive-success: oklch(0.55 0.14 160);    /* #008768 */
+
+    /* Tag palette */
+    --tag-teal-bg: oklch(0.93 0.07 168);            /* #c0f3e9 */
+    --tag-teal-fg: oklch(0.41 0.12 168);            /* #00644d */
+    --tag-violet-bg: oklch(0.93 0.06 270);          /* #e3e3ff */
+    --tag-violet-fg: oklch(0.44 0.18 270);          /* #4242c3 */
+    --tag-blue-bg: oklch(0.93 0.07 196);            /* #bffbfb */
+    --tag-blue-fg: oklch(0.42 0.1 210);             /* #00616e */
+    --tag-yellow-bg: oklch(0.93 0.124 96);          /* #ffeebf */
+    --tag-yellow-fg: oklch(0.48 0.14 55);           /* #954300 */
+
+    /* Chart colors */
     --chart-1: oklch(0.808 0.114 19.571);
     --chart-2: oklch(0.637 0.237 25.331);
     --chart-3: oklch(0.577 0.245 27.325);
     --chart-4: oklch(0.505 0.213 27.518);
     --chart-5: oklch(0.444 0.177 26.899);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.987 0.002 197.1);
+
+    /* Sidebar */
+    --sidebar: oklch(1 0 0);
     --sidebar-foreground: oklch(0.148 0.004 228.8);
-    --sidebar-primary: oklch(0.577 0.245 27.325);
-    --sidebar-primary-foreground: oklch(0.971 0.013 17.38);
+    --sidebar-primary: oklch(0.613 0.218 18.5);
+    --sidebar-primary-foreground: oklch(1 0 0);
     --sidebar-accent: oklch(0.963 0.002 197.1);
-    --sidebar-accent-foreground: oklch(0.218 0.008 223.9);
-    --sidebar-border: oklch(0.925 0.005 214.3);
-    --sidebar-ring: oklch(0.723 0.014 214.4);
+    --sidebar-accent-foreground: oklch(0.148 0.004 228.8);
+    --sidebar-border: oklch(0.906 0 0);
+    --sidebar-ring: oklch(0.613 0.218 18.5);
+
+    /* Typography scale - Toddle */
+    --fs-label-xsmall: 10px;
+    --fs-label-small: 12px;
+    --fs-label-base: 14px;
+    --fs-body-small: 12px;
+    --fs-body-base: 14px;
+    --lh-label-xsmall: 16px;
+    --lh-label-small: 16px;
+    --lh-label-base: 20px;
+    --lh-body-small: 16px;
+    --lh-body-base: 20px;
 }
 
 .dark {
@@ -46,8 +128,8 @@
     --card-foreground: oklch(0.987 0.002 197.1);
     --popover: oklch(0.218 0.008 223.9);
     --popover-foreground: oklch(0.987 0.002 197.1);
-    --primary: oklch(0.444 0.177 26.899);
-    --primary-foreground: oklch(0.971 0.013 17.38);
+    --primary: oklch(0.613 0.218 18.5);
+    --primary-foreground: oklch(1 0 0);
     --secondary: oklch(0.274 0.006 286.033);
     --secondary-foreground: oklch(0.985 0 0);
     --muted: oklch(0.275 0.011 216.9);
@@ -57,7 +139,7 @@
     --destructive: oklch(0.704 0.191 22.216);
     --border: oklch(1 0 0 / 10%);
     --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.56 0.021 213.5);
+    --ring: oklch(0.613 0.218 18.5);
     --chart-1: oklch(0.808 0.114 19.571);
     --chart-2: oklch(0.637 0.237 25.331);
     --chart-3: oklch(0.577 0.245 27.325);
@@ -65,64 +147,167 @@
     --chart-5: oklch(0.444 0.177 26.899);
     --sidebar: oklch(0.218 0.008 223.9);
     --sidebar-foreground: oklch(0.987 0.002 197.1);
-    --sidebar-primary: oklch(0.637 0.237 25.331);
-    --sidebar-primary-foreground: oklch(0.971 0.013 17.38);
+    --sidebar-primary: oklch(0.613 0.218 18.5);
+    --sidebar-primary-foreground: oklch(1 0 0);
     --sidebar-accent: oklch(0.275 0.011 216.9);
     --sidebar-accent-foreground: oklch(0.987 0.002 197.1);
     --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.56 0.021 213.5);
+    --sidebar-ring: oklch(0.613 0.218 18.5);
+
+    --surface-primary: oklch(0.148 0.004 228.8);
+    --surface-secondary: oklch(0.218 0.008 223.9);
+    --header-bg: oklch(0.1 0.004 228.8);
+    --text-on-header: oklch(0.98 0 0);
 }
 
 @theme inline {
     --font-sans: var(--font-sans);
-    --color-sidebar-ring: var(--sidebar-ring);
-    --color-sidebar-border: var(--sidebar-border);
-    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-    --color-sidebar-accent: var(--sidebar-accent);
-    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-    --color-sidebar-primary: var(--sidebar-primary);
-    --color-sidebar-foreground: var(--sidebar-foreground);
-    --color-sidebar: var(--sidebar);
-    --color-chart-5: var(--chart-5);
-    --color-chart-4: var(--chart-4);
-    --color-chart-3: var(--chart-3);
-    --color-chart-2: var(--chart-2);
-    --color-chart-1: var(--chart-1);
-    --color-ring: var(--ring);
-    --color-input: var(--input);
-    --color-border: var(--border);
-    --color-destructive: var(--destructive);
-    --color-accent-foreground: var(--accent-foreground);
-    --color-accent: var(--accent);
-    --color-muted-foreground: var(--muted-foreground);
-    --color-muted: var(--muted);
-    --color-secondary-foreground: var(--secondary-foreground);
-    --color-secondary: var(--secondary);
-    --color-primary-foreground: var(--primary-foreground);
-    --color-primary: var(--primary);
-    --color-popover-foreground: var(--popover-foreground);
-    --color-popover: var(--popover);
-    --color-card-foreground: var(--card-foreground);
-    --color-card: var(--card);
-    --color-foreground: var(--foreground);
+    --font-mono: var(--font-mono);
+
+    /* shadcn color mappings */
     --color-background: var(--background);
-    --radius-sm: calc(var(--radius) * 0.6);
-    --radius-md: calc(var(--radius) * 0.8);
-    --radius-lg: var(--radius);
-    --radius-xl: calc(var(--radius) * 1.4);
-    --radius-2xl: calc(var(--radius) * 1.8);
-    --radius-3xl: calc(var(--radius) * 2.2);
-    --radius-4xl: calc(var(--radius) * 2.6);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+
+    /* Toddle semantic color utilities */
+    --color-surface-primary: var(--surface-primary);
+    --color-surface-secondary: var(--surface-secondary);
+    --color-surface-tertiary: var(--surface-tertiary);
+    --color-header-bg: var(--header-bg);
+    --color-header-border: var(--header-border);
+    --color-text-primary: var(--text-primary);
+    --color-text-secondary: var(--text-secondary);
+    --color-text-reverse: var(--text-reverse);
+    --color-text-on-header: var(--text-on-header);
+    --color-interactive-primary: var(--interactive-primary);
+    --color-border-secondary: var(--border-secondary);
+    --color-decorative-yellow: var(--decorative-yellow);
+    --color-decorative-bg-blue: var(--decorative-bg-blue);
+    --color-decorative-fg-blue: var(--decorative-fg-blue);
+    --color-decorative-bg-yellow: var(--decorative-bg-yellow);
+    --color-interactive-success: var(--interactive-success);
+    --color-tag-teal-bg: var(--tag-teal-bg);
+    --color-tag-teal-fg: var(--tag-teal-fg);
+    --color-tag-violet-bg: var(--tag-violet-bg);
+    --color-tag-violet-fg: var(--tag-violet-fg);
+    --color-tag-blue-bg: var(--tag-blue-bg);
+    --color-tag-blue-fg: var(--tag-blue-fg);
+    --color-tag-yellow-bg: var(--tag-yellow-bg);
+    --color-tag-yellow-fg: var(--tag-yellow-fg);
+
+    /* Border radius */
+    --radius-sm: calc(var(--radius) * 0.67);       /* ~4px */
+    --radius-md: var(--radius);                     /* 6px */
+    --radius-lg: calc(var(--radius) * 1.67);        /* 10px */
+    --radius-xl: calc(var(--radius) * 2.67);        /* 16px */
+    --radius-2xl: calc(var(--radius) * 4);          /* 24px */
+    --radius-3xl: calc(var(--radius) * 5.33);
+    --radius-4xl: calc(var(--radius) * 6.67);
+    --radius-full: 9999px;
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+    * {
+        @apply border-border outline-ring/50;
     }
-  body {
-    @apply bg-background text-foreground;
+    body {
+        @apply bg-background text-foreground font-medium;
     }
-  html {
-    @apply font-sans;
+    html {
+        @apply font-sans;
+    }
+
+    /* Form controls & components - white background for consistency */
+    [data-slot="input"],
+    [data-slot="select-trigger"],
+    input:not([type="checkbox"]):not([type="radio"]),
+    select,
+    textarea {
+        background-color: var(--background);
+    }
+
+    /* Checkbox & radio - force white background (native controls inherit dark in some browsers) */
+    input[type="checkbox"],
+    input[type="radio"] {
+        background-color: #ffffff;
+        appearance: none;
+        -webkit-appearance: none;
+        width: 1rem;
+        height: 1rem;
+        border: 1px solid var(--border);
+        border-radius: 0.25rem;
+        display: grid;
+        place-content: center;
+    }
+    input[type="checkbox"]:checked,
+    input[type="radio"]:checked {
+        background-color: var(--interactive-primary);
+        border-color: var(--interactive-primary);
+    }
+    input[type="checkbox"]::before {
+        content: "";
+        width: 0.35rem;
+        height: 0.6rem;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg) scale(0);
+        margin-bottom: 0.15rem;
+    }
+    input[type="checkbox"]:checked::before {
+        transform: rotate(45deg) scale(1);
+    }
+    input[type="checkbox"]:indeterminate {
+        background-color: var(--interactive-primary);
+        border-color: var(--interactive-primary);
+    }
+    input[type="checkbox"]:indeterminate::before {
+        width: 0.5rem;
+        height: 2px;
+        border: none;
+        background: white;
+        transform: none;
+        margin-bottom: 0;
+    }
+    input[type="radio"] {
+        border-radius: 9999px;
+    }
+    input[type="radio"]::before {
+        content: "";
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 9999px;
+        background: white;
+        transform: scale(0);
+    }
+    input[type="radio"]:checked::before {
+        transform: scale(1);
     }
 }
