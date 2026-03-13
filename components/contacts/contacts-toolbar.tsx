@@ -30,6 +30,7 @@ interface ContactsToolbarProps {
   selectedCount: number;
   onBulkDelete: () => void;
   onClearSelection: () => void;
+  onBulkExport?: () => void;
 }
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -61,6 +62,7 @@ export function ContactsToolbar({
   selectedCount,
   onBulkDelete,
   onClearSelection,
+  onBulkExport,
 }: ContactsToolbarProps) {
   const activeFilterCount =
     (filters.types.size > 0 ? 1 : 0) + (filters.scores.size > 0 ? 1 : 0);
@@ -204,7 +206,7 @@ export function ContactsToolbar({
             Deselect all
           </button>
           <div className="flex-1" />
-          <Button variant="outline" size="md">
+          <Button variant="outline" size="md" onClick={onBulkExport}>
             <Download className="w-3.5 h-3.5" />
             Export selected
           </Button>

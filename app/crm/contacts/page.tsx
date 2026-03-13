@@ -1,15 +1,21 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { PageHeader } from "@/components/layout/page-header";
 import { ContactsTable, type SortField, type SortDir } from "@/components/contacts/contacts-table";
 import { ContactsToolbar, type ContactFilters } from "@/components/contacts/contacts-toolbar";
-import { SAMPLE_CONTACTS } from "@/components/contacts/contacts-data";
 import { Button } from "@/components/ui/button";
-import { Plus, Download } from "lucide-react";
+import { Plus, Download, Upload } from "lucide-react";
+import { useContacts } from "@/lib/contact-store";
+import { CreateContactModal } from "@/components/contacts/modals/create-contact-modal";
+import { ExportContactsModal } from "@/components/contacts/modals/export-contacts-modal";
 
 export default function ContactDirectoryPage() {
+  const router = useRouter();
+  const store = useContacts();
+
   // Selection
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
@@ -26,9 +32,16 @@ export default function ContactDirectoryPage() {
     dir: "desc",
   });
 
+  // Modals
+  const [showCreate, setShowCreate] = useState(false);
+  const [showExport, setShowExport] = useState(false);
+
+  // All contacts from store
+  const allContacts = store.getAll();
+
   // Derived: filtered + sorted rows
   const rows = useMemo(() => {
-    let data = [...SAMPLE_CONTACTS];
+    let data = [...allContacts];
 
     // Search
     if (filters.search.trim()) {
@@ -80,7 +93,12 @@ export default function ContactDirectoryPage() {
     });
 
     return data;
-  }, [filters, sort]);
+  }, [allContacts, filters, sort]);
+
+  // Export scope: selected contacts, or all filtered rows if nothing selected
+  const exportContacts = selectedIds.size > 0
+    ? rows.filter((r) => selectedIds.has(r.id))
+    : rows;
 
   function handleToggleSort(field: SortField) {
     setSort((prev) =>
@@ -102,16 +120,41 @@ export default function ContactDirectoryPage() {
     setSelectedIds(checked ? new Set(rows.map((r) => r.id)) : new Set());
   }
 
+  function handleRowAction(id: string, action: string) {
+    switch (action) {
+      case "view":
+        router.push(`/crm/contacts/${id}`);
+        break;
+      case "merge":
+        router.push(`/crm/contacts/${id}/merge`);
+        break;
+      case "archive":
+        if (confirm("Archive this contact?")) {
+          store.archive(id);
+          setSelectedIds((prev) => {
+            const next = new Set(prev);
+            next.delete(id);
+            return next;
+          });
+        }
+        break;
+    }
+  }
+
   const pageHeader = (
     <PageHeader
       title="Contact directory"
       actions={
         <>
-          <Button variant="outline" size="md" onClick={() => console.log("Export")}>
+          <Button variant="outline" size="md" onClick={() => router.push("/crm/contacts/import")}>
+            <Upload className="w-4 h-4" />
+            Import
+          </Button>
+          <Button variant="outline" size="md" onClick={() => setShowExport(true)}>
             <Download className="w-4 h-4" />
             Export
           </Button>
-          <Button size="md" onClick={() => console.log("Add contact")}>
+          <Button size="md" onClick={() => setShowCreate(true)}>
             <Plus className="w-4 h-4" />
             Add contact
           </Button>
@@ -134,10 +177,13 @@ export default function ContactDirectoryPage() {
             totalCount={rows.length}
             selectedCount={selectedIds.size}
             onBulkDelete={() => {
-              console.log("Delete", [...selectedIds]);
-              setSelectedIds(new Set());
+              if (confirm(`Archive ${selectedIds.size} contacts?`)) {
+                [...selectedIds].forEach((id) => store.archive(id));
+                setSelectedIds(new Set());
+              }
             }}
             onClearSelection={() => setSelectedIds(new Set())}
+            onBulkExport={() => setShowExport(true)}
           />
         </div>
 
@@ -148,7 +194,8 @@ export default function ContactDirectoryPage() {
             selectedIds={selectedIds}
             onSelectRow={handleSelectRow}
             onSelectAll={handleSelectAll}
-            onRowAction={(id, action) => console.log(action, id)}
+            onRowClick={(id) => router.push(`/crm/contacts/${id}`)}
+            onRowAction={handleRowAction}
             sort={sort}
             onSort={handleToggleSort}
           />
@@ -157,7 +204,7 @@ export default function ContactDirectoryPage() {
         {/* Footer: pagination stub */}
         <div className="shrink-0 px-6 pt-0 pb-4 bg-white flex items-center justify-between">
           <span className="text-[12px] text-text-secondary">
-            Showing {rows.length} of {SAMPLE_CONTACTS.length} contacts
+            Showing {rows.length} of {allContacts.length} contacts
           </span>
           <div className="flex items-center gap-1">
             <button
@@ -175,6 +222,15 @@ export default function ContactDirectoryPage() {
           </div>
         </div>
       </div>
+
+      {/* Modals */}
+      {showCreate && <CreateContactModal onClose={() => setShowCreate(false)} />}
+      {showExport && (
+        <ExportContactsModal
+          contacts={exportContacts}
+          onClose={() => setShowExport(false)}
+        />
+      )}
     </DashboardLayout>
   );
 }

@@ -1,7 +1,14 @@
 "use client";
 
 import * as React from "react";
-import { MoreVertical, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
+import { MoreVertical, ArrowUpDown, ArrowUp, ArrowDown, Eye, Merge, Archive } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -184,6 +191,7 @@ export interface ContactsTableProps {
   selectedIds?: Set<string>;
   onSelectRow?: (id: string, checked: boolean) => void;
   onSelectAll?: (checked: boolean) => void;
+  onRowClick?: (id: string) => void;
   onRowAction?: (id: string, action: string) => void;
   sort?: { field: SortField; dir: SortDir };
   onSort?: (field: SortField) => void;
@@ -195,6 +203,7 @@ export function ContactsTable({
   selectedIds = new Set(),
   onSelectRow,
   onSelectAll,
+  onRowClick,
   onRowAction,
   sort,
   onSort,
@@ -247,13 +256,18 @@ export function ContactsTable({
           {rows.map((row) => (
             <tr
               key={row.id}
+              onClick={() => onRowClick?.(row.id)}
               className={cn(
                 "transition-colors hover:bg-[#fafafa]",
-                selectedIds.has(row.id) && "bg-[#f5f5f5]"
+                selectedIds.has(row.id) && "bg-[#f5f5f5]",
+                onRowClick && "cursor-pointer"
               )}
             >
               {/* Checkbox */}
-              <td className="h-11 w-10 px-3 py-1 border-b border-border-secondary align-middle bg-background">
+              <td
+                className="h-11 w-10 px-3 py-1 border-b border-border-secondary align-middle bg-background"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <input
                   type="checkbox"
                   checked={selectedIds.has(row.id)}
@@ -330,14 +344,46 @@ export function ContactsTable({
               </td>
 
               {/* Row actions */}
-              <td className="h-11 w-12 px-2 py-1 border-b border-border-secondary align-middle">
-                <button
-                  onClick={() => onRowAction?.(row.id, "menu")}
-                  className="inline-flex items-center justify-center w-7 h-7 rounded hover:bg-border-secondary text-text-secondary transition-colors"
-                  aria-label="Contact actions"
-                >
-                  <MoreVertical className="w-4 h-4" />
-                </button>
+              <td
+                className="h-11 w-12 px-2 py-1 border-b border-border-secondary align-middle"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <DropdownMenu>
+                  <DropdownMenuTrigger
+                    render={
+                      <button
+                        className="inline-flex items-center justify-center w-7 h-7 rounded hover:bg-[#f0f0f0] text-text-secondary transition-colors"
+                        aria-label="Contact actions"
+                      >
+                        <MoreVertical className="w-4 h-4" />
+                      </button>
+                    }
+                  />
+                  <DropdownMenuContent align="end" className="w-44">
+                    <DropdownMenuItem
+                      className="text-[13px] gap-2"
+                      onClick={() => onRowAction?.(row.id, "view")}
+                    >
+                      <Eye className="w-3.5 h-3.5" />
+                      View profile
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      className="text-[13px] gap-2"
+                      onClick={() => onRowAction?.(row.id, "merge")}
+                    >
+                      <Merge className="w-3.5 h-3.5" />
+                      Merge with another
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      className="text-[13px] gap-2 text-destructive"
+                      onClick={() => onRowAction?.(row.id, "archive")}
+                    >
+                      <Archive className="w-3.5 h-3.5" />
+                      Archive
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </td>
             </tr>
           ))}

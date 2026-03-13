@@ -1,4 +1,3 @@
-import { Geist_Mono } from "next/font/google"
 import localFont from "next/font/local"
 
 import "./globals.css"
@@ -16,11 +15,6 @@ const fontSans = localFont({
   variable: "--font-sans",
 })
 
-const fontMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-})
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -30,7 +24,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, fontSans.variable, "font-sans")}
+      className={cn("antialiased", fontSans.variable, "font-sans")}
     >
       <body className="overflow-hidden">
         <ThemeProvider>
