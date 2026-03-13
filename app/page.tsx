@@ -1,5 +1,10 @@
-import { redirect } from "next/navigation"
+"use client"
+
+import { useEffect } from "react"
 
 export default function RootPage() {
-  redirect("/crm/contacts")
+  useEffect(() => {
+    window.location.replace("/crm/contacts")
+  }, [])
+  return null
 }
